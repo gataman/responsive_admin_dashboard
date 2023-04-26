@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class Constants {
   //! Size:
   static const double titleMediumFontSize = 16;
+  static const double drawerMenuWith = 220;
 
   //!Colors Dark:
   static const Color darkCanvasColor = Color(0xFF2A2D3E);

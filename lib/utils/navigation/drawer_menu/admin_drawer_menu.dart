@@ -1,44 +1,52 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import '../../constants/constants.dart';
+import 'admin_drawer_list_tile.dart';
+import 'admin_drawer_model.dart';
 
-import '../../routes/app_routes.dart';
-import 'admin_drawer_menu_list_tile.dart';
-
-class AdminDrawerMenu extends StatelessWidget {
-  const AdminDrawerMenu({super.key});
+class AdminDrawerMenu extends StatefulWidget {
+  const AdminDrawerMenu({Key? key, this.hasHeader = true, this.isDesktop = false}) : super(key: key);
+  final bool hasHeader;
+  final bool isDesktop;
 
   @override
+  State<AdminDrawerMenu> createState() => _AdminDrawerMenuState();
+}
+
+class _AdminDrawerMenuState extends State<AdminDrawerMenu> {
+  @override
   Widget build(BuildContext context) {
+    final drawerList = AdminDrawerModel.getAdminDrawerList;
     return SizedBox(
+      width: Constants.drawerMenuWith,
       child: Drawer(
         child: Column(
           children: [
-            //const DrawerHeader(child: Text('Admin Template')),
-            ListView.builder(
+            if (widget.hasHeader) _drawerHeader(context),
+            const SizedBox(height: 8),
+            ListView.separated(
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                final appRoute = AppRoutes.values[index];
-                final isCurrentRoute = GoRouter.of(context).location.toString() == appRoute.path;
-                debugPrint(GoRouter.of(context).location.toString());
-                debugPrint(appRoute.path);
+                final listItem = drawerList[index];
 
-                return InkWell(
-                  key: ObjectKey(appRoute.path),
-                  hoverColor: Theme.of(context).dividerColor,
-                  onTap: () {
-                    if (!isCurrentRoute) {
-                      _goRoute(context, appRoute);
+                return AdminDrawerListTile(
+                  title: listItem.title,
+                  iconData: listItem.iconData,
+                  tileColor: context.router.currentPath == '/admin/${listItem.route}' ? Colors.white12 : null,
+                  onPress: () {
+                    context.router.replaceNamed(listItem.route);
+                    if (!widget.isDesktop) {
+                      Navigator.pop(context);
                     }
+                    // Set state for item backgroundColor
+                    setState(() {});
                   },
-                  child: AdminDrawerMenuListTile(
-                    title: appRoute.title,
-                    route: appRoute,
-                    icon: appRoute.icon,
-                    isCurrentRoute: isCurrentRoute,
-                  ),
                 );
               },
-              itemCount: AppRoutes.values.length,
+              separatorBuilder: (context, index) => const Divider(
+                height: 0,
+              ),
+              itemCount: drawerList.length,
             )
           ],
         ),
@@ -46,9 +54,45 @@ class AdminDrawerMenu extends StatelessWidget {
     );
   }
 
-  void _goRoute(BuildContext context, AppRoutes appRoute) {
-    debugPrint(appRoute.path);
-    context.goNamed(appRoute.path);
-    Navigator.pop(context);
+  Widget _drawerHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Container(
+        color: Constants.darkPrimaryColor,
+        height: 60,
+        child: Center(
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Admin Panel',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(color: Constants.darkBackgroundColor),
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    if (!widget.isDesktop) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Constants.darkBackgroundColor,
+                  ))
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void itemClicked() {
+    /*
+    if (controller.scaffoldStateKey.currentState!.isDrawerOpen) {
+      controller.scaffoldStateKey.currentState!.openEndDrawer();
+    }
+
+     */
   }
 }

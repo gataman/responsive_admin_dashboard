@@ -137,7 +137,6 @@ class AppTheme {
       drawerTheme: const DrawerThemeData(
         backgroundColor: Constants.darkCanvasColor,
         shape: BeveledRectangleBorder(),
-        width: 230,
       ),
       navigationRailTheme: const NavigationRailThemeData(
         backgroundColor: Constants.darkCanvasColor,
@@ -221,8 +220,9 @@ class AppTheme {
 
     //* COMPONENT THEMES
     appBarTheme: const AppBarTheme(
-      backgroundColor: Constants.darkBackgroundColor,
-      elevation: 0,
+      backgroundColor: Constants.darkCanvasColor,
+      shadowColor: Colors.black,
+      elevation: 20,
     ),
     cardTheme: CardTheme(
       margin: EdgeInsets.zero,
@@ -230,7 +230,10 @@ class AppTheme {
       color: Constants.lightCanvasColor,
       shape: Constants.getBorder(borderColor: Constants.lightDividerColor), //Border.all(color: Colors.white10),
     ),
-    drawerTheme: const DrawerThemeData(backgroundColor: Constants.darkBackgroundColor),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: Constants.darkCanvasColor,
+      shape: BeveledRectangleBorder(),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: Constants.lightPrimaryColor,
