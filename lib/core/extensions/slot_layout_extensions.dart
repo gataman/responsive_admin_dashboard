@@ -4,7 +4,8 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import '../enum/slot_layout_configs.dart';
 
 extension SlotLayoutConfigsExtensions on SlotLayoutConfigs {
-  Map<Breakpoint, SlotLayoutConfig> getConfig(Widget? child, [bool expandBodyWidth = false]) {
+  Map<Breakpoint, SlotLayoutConfig> getConfig(Widget? child,
+      [bool expandBodyWidth = false, bool expandBodyHeight = false]) {
     return child != null
         ? {
             breakpoint: SlotLayout.from(
@@ -12,7 +13,16 @@ extension SlotLayoutConfigsExtensions on SlotLayoutConfigs {
               builder: (context) {
                 if (expandBodyWidth) {
                   return Row(
-                    children: [Expanded(child: child)],
+                    children: [
+                      expandBodyHeight
+                          ? Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [Expanded(child: child)],
+                              ),
+                            )
+                          : Expanded(child: child),
+                    ],
                   );
                 } else {
                   return child;

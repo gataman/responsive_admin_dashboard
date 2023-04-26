@@ -11,6 +11,7 @@ class AdminDashboardView extends BaseAdaptiveView {
   @override
   bool get expandSecondaryBodyWidth => true;
 
+  // Desktop Body
   @override
   Widget desktopBody(BuildContext context) {
     return const _ExampleWidget(
@@ -18,6 +19,7 @@ class AdminDashboardView extends BaseAdaptiveView {
     );
   }
 
+  // Tablet Body
   @override
   Widget tabletBody(BuildContext context) {
     return Column(
@@ -34,6 +36,7 @@ class AdminDashboardView extends BaseAdaptiveView {
     );
   }
 
+  // Mobile Body
   @override
   Widget mobileBody(BuildContext context) {
     return Column(

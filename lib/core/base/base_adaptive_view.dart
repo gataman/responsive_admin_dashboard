@@ -33,6 +33,10 @@ abstract class BaseAdaptiveView extends StatelessWidget {
 
   bool get expandSecondaryBodyWidth => false;
 
+  bool get expandBodyHeight => false;
+
+  bool get expandSecondaryBodyHeight => false;
+
   @override
   Widget build(BuildContext context) {
     return AdaptiveLayout(
@@ -41,19 +45,22 @@ abstract class BaseAdaptiveView extends StatelessWidget {
       bodyRatio: bodyRatio,
       body: SlotLayout(
         config: <Breakpoint, SlotLayoutConfig>{
-          ...SlotLayoutConfigs.standardBody.getConfig(standardBody(context), expandBodyWidth),
-          ...SlotLayoutConfigs.desktopBody.getConfig(desktopBody(context), expandBodyWidth),
-          ...SlotLayoutConfigs.tabletBody.getConfig(tabletBody(context), expandBodyWidth),
-          ...SlotLayoutConfigs.mobileBody.getConfig(mobileBody(context), expandBodyWidth),
+          ...SlotLayoutConfigs.standardBody.getConfig(standardBody(context), expandBodyWidth, expandBodyHeight),
+          ...SlotLayoutConfigs.desktopBody.getConfig(desktopBody(context), expandBodyWidth, expandBodyHeight),
+          ...SlotLayoutConfigs.tabletBody.getConfig(tabletBody(context), expandBodyWidth, expandBodyHeight),
+          ...SlotLayoutConfigs.mobileBody.getConfig(mobileBody(context), expandBodyWidth, expandBodyHeight),
         },
       ),
       secondaryBody: SlotLayout(
         config: <Breakpoint, SlotLayoutConfig>{
           ...SlotLayoutConfigs.standardSecondaryBody
               .getConfig(standardSecondaryBody(context), expandSecondaryBodyWidth),
-          ...SlotLayoutConfigs.desktopSecondaryBody.getConfig(desktopSecondaryBody(context), expandSecondaryBodyWidth),
-          ...SlotLayoutConfigs.tabletSecondaryBody.getConfig(tabletSecondaryBody(context), expandSecondaryBodyWidth),
-          ...SlotLayoutConfigs.mobileSecondaryBody.getConfig(mobileSecondaryBody(context), expandSecondaryBodyWidth),
+          ...SlotLayoutConfigs.desktopSecondaryBody
+              .getConfig(desktopSecondaryBody(context), expandSecondaryBodyWidth, expandSecondaryBodyHeight),
+          ...SlotLayoutConfigs.tabletSecondaryBody
+              .getConfig(tabletSecondaryBody(context), expandSecondaryBodyWidth, expandSecondaryBodyHeight),
+          ...SlotLayoutConfigs.mobileSecondaryBody
+              .getConfig(mobileSecondaryBody(context), expandSecondaryBodyWidth, expandSecondaryBodyHeight),
         },
       ),
     );
