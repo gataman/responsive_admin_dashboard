@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:responsive_admin_dashboard/utils/constants/break_points_constants.dart';
+import 'package:responsive_admin_dashboard/utils/constants/constants.dart';
 import '../../utils/navigation/drawer_menu/admin_drawer_menu.dart';
 
 @RoutePage()
@@ -13,7 +14,10 @@ class AdminMainView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Admin Responsive Panel'),
+          title: const Text(
+            'Admin Responsive Panel',
+            style: TextStyle(color: Constants.darkPrimaryColor),
+          ),
         ),
         drawer: !BreakPointsConstants.desktop.isActive(context) ? const AdminDrawerMenu() : null,
         body: const _AdminMainViewBody(),
